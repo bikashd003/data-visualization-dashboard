@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState,lazy,Suspense } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import LineChart from '../Components/LineChart';
-import BarChartComponent from '../Components/BarChartComponent';
-import PieChart from '../Components/PieChart';
+const LineChart = lazy(() => import('../Components/LineChart'));
+
+const BarChartComponent = lazy(() => import('../Components/BarChartComponent'));
+const PieChart = lazy(() => import('../Components/PieChart')); 
 import Navbar from '../Components/Navbar';
 import {Drawer, List, ListItem, ListItemText } from '@mui/material';
 
@@ -39,29 +40,36 @@ const Dashboard = () => {
         </List>
       </Drawer>
     
-      <Grid container spacing={3} >
-        <Grid item xs={12} md={6} lg={4}>
+      <Grid container spacing={2} padding={4} >
+        <Grid item xs={12} md={6} lg={8}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom>
               User Traffic
             </Typography>
-            <LineChart />
+            <Suspense fallback={<div>Loading...</div>}>
+              <LineChart />
+            </Suspense>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Top Pages by Views
-            </Typography>
-            <BarChartComponent />
-          </Paper>
-        </Grid>
+ 
         <Grid item xs={12} md={6} lg={4}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom>
               Device Breakdown
             </Typography>
-            <PieChart />
+            <Suspense fallback={<div>Loading...</div>}>
+              <PieChart />
+            </Suspense>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={6} lg={8}>
+          <Paper elevation={3} sx={{ p: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Top Pages by Views
+            </Typography>
+            <Suspense fallback={<div>Loading...</div>}>
+              <BarChartComponent />
+            </Suspense>
           </Paper>
         </Grid>
       </Grid>

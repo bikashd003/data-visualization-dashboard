@@ -2,6 +2,8 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { googleLogout } from '@react-oauth/google';
+
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -19,8 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   };
 
   const handleLogout = () => {
-    // Handle logout logic here
-    console.log('Logged out');
+    googleLogout();
     handleMenuClose();
   };
 
