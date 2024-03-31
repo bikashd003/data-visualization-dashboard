@@ -11,56 +11,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import Navbar from "../Components/Navbar";
 import { DataContext } from "../Context/ContextStore";
-import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 
 
-const drawerWidth = 200;
 const Dashboard = () => {
   const { open, setOpen } = useContext(DataContext)!;
 
   const handleMenuClick = () => {
     setOpen(!open);
   };
-  const handleItemClick = () => {
-    setOpen(false);
-  }
+
   return (
     <>
       <Navbar onMenuClick={handleMenuClick} />
-      <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: drawerWidth,
-        },
-      }}
-      variant="temporary"
-      anchor="left"
-      open={open}
-      onClose={() => setOpen(false)}
-      ModalProps={{
-        keepMounted: true,
-      }}
-    >
-      <List sx={{padding:"1vw"}}>
-        {['Dashboard', 'Analytics', 'Settings'].map((text) => (
-          <ListItem
-            key={text}
-            sx={{
-              cursor: 'pointer',
-              borderRadius:"50px",
-              '&:hover': {
-                backgroundColor: (theme) => theme.palette.action.hover,
-              },
-            }}
-            onClick={handleItemClick}
-          >
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
+
       <Grid container spacing={2} paddingLeft={4} paddingRight={4} paddingTop={2}>
         <Grid item xs={12} md={6} lg={8}>
           <Paper elevation={3} sx={{ p: 2 }}>

@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './Database/Db.js';
 import AdminRouter from "./Routes/Admin.routes.js"
 import TraficRouter from './Routes/TraficData.routes.js';
+import productRouter from './Routes/Products.routes.js';
 const app = express();
 app.use(express.json());
 dotenv.config({ path: "./.env" });
@@ -21,3 +22,4 @@ connectDB()
 
 app.use("/api",AdminRouter)
 app.use(TraficRouter)
+app.use(productRouter)
