@@ -41,13 +41,16 @@ const getProducts = async (req, res) => {
           sortOptions = { price: -1 }; 
           break;
       }
-  
+      const topThreeRatingProducts = await Product.find()
+      .sort({ rating: -1 })
+      .limit(3);
+
       const products = await Product.find()
         .skip(skip)
         .limit(limit)
         .sort(sortOptions);
   
-      return res.status(200).json({ totalPages, currentPage: page, totalProducts: totalCount, products });
+      return res.status(200).json({ totalPages, topThreeRatingProducts, totalProducts: totalCount, products });
     } catch (error) {
       return res.status(500).json({ error: "Internal server error" });
     }

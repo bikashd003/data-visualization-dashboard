@@ -48,7 +48,7 @@ const Products: React.FC = () => {
     setSelectedRow,
     sortingCriteria,
     setOpenModal,
-    success,
+    success,setTotalProducts,setTopThreeProducts
   } = useContext(DataContext)!;
 
   const handleMenuClick = () => {
@@ -66,6 +66,8 @@ const Products: React.FC = () => {
       });
       setRows(response.data.products);
       setTotalPages(response.data.totalPages);
+      setTotalProducts(response.data.totalProducts)
+      setTopThreeProducts(response.data.topThreeRatingProducts)
     } catch (error) {
       console.error("Error fetching products data:", error);
     }
@@ -106,21 +108,20 @@ const Products: React.FC = () => {
         <Cards />
         <div
           style={{
-            marginTop: "1.5vw",
-            padding: "1.5vw",
-            border: "2px solid black",
+            marginTop: "1.5vw"
           }}
         >
           <FilterProduct />
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
+              <TableHead sx={{backgroundColor:"gray"}}>
                 <TableRow>
                   <TableCell>Product Name</TableCell>
                   <TableCell>Brand</TableCell>
                   <TableCell>Price</TableCell>
                   <TableCell>Stock</TableCell>
                   <TableCell>Ratings</TableCell>
+                  <TableCell>Edit</TableCell>
                   <TableCell>Delete</TableCell>
                 </TableRow>
               </TableHead>

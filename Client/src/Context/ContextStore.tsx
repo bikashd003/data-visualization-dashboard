@@ -24,6 +24,10 @@ export interface DataContextType {
   setSnackbarOpen: (value: boolean) => void;
   success: boolean;
   setSuccess: (value: boolean) => void;
+  totalProducts:number;
+  setTotalProducts: (value: number) => void;
+  topThreeProducts:Product[];
+  setTopThreeProducts: (value: Product[]) => void;
 }
 interface Product {
   _id: string;
@@ -45,6 +49,8 @@ const DataProvider: React.FC<{ children: React.ReactNode }> = ({
   const [page, setPage] = useState<number>(1);
   const [perPage] = useState<number>(5);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalProducts,setTotalProducts]=useState<number>(0)
+  const [topThreeProducts,setTopThreeProducts]=useState<Product[]>([])
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedRow, setSelectedRow] = useState<Product | null>(null);
   const [sortingCriteria, setSortingCriteria] = useState<string>("relevance");
@@ -76,7 +82,7 @@ const DataProvider: React.FC<{ children: React.ReactNode }> = ({
         setOpenModal,
         snackbarOpen,
         setSnackbarOpen,
-        success, setSuccess
+        success, setSuccess,totalProducts,setTotalProducts,topThreeProducts,setTopThreeProducts
       }}
     >
       {children}

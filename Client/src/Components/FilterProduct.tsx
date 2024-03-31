@@ -1,4 +1,4 @@
-import { Select, MenuItem } from "@mui/material";
+import { Select, MenuItem, Typography } from "@mui/material";
 import { useContext } from "react";
 import { DataContext, DataContextType } from "../Context/ContextStore";
 
@@ -14,12 +14,16 @@ const FilterProduct: React.FC = () => {
 
   return (
     <>
+     <Typography variant="h5" component="div">
+              Sort by:
+            </Typography>
       <Select
         fullWidth
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         onChange={handleSortChange}
         value={sortingCriteria}
+        sx={{marginBottom:"0.5vw"}}
       >
         <MenuItem value="relevance">Relevance</MenuItem>
         <MenuItem value="popularity">Popularity</MenuItem>
