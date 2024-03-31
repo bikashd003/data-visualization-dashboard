@@ -3,6 +3,7 @@ import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import { DataProvider } from "./Context/ContextStore";
+import Products from "./Components/Products";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,16 @@ const router = createBrowserRouter([
       <>
         <DataProvider>
           <Dashboard />
+        </DataProvider>
+      </>
+    ),
+  },
+  {
+    path: "/products",
+    element: (
+      <>
+        <DataProvider>
+         <Products />
         </DataProvider>
       </>
     ),
