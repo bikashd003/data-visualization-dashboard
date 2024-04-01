@@ -74,7 +74,8 @@ const Signup: React.FC = () => {
           })
           .then((res:any) => {
             if (res.status === 200) {
-              sessionStorage.setItem("token", res.token);
+              sessionStorage.setItem("token", res.data.token);
+              console.log(res)
               navigate("/dashboard");
             }
             console.log(res);
@@ -101,7 +102,7 @@ const Signup: React.FC = () => {
         })
         .then((res:any) => {
           if (res.status === 200) {
-            sessionStorage.setItem("token", res.token);
+            sessionStorage.setItem("token", res.data.token);
             navigate("/dashboard");
           }
           console.log(res);
