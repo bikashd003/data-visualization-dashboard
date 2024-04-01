@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { DataContext } from "../Context/ContextStore";
 import Navbar from "./Navbar";
 import {
@@ -48,9 +48,9 @@ const Products: React.FC = () => {
     setSelectedRow,
     sortingCriteria,
     setOpenModal,
-    success,setTotalProducts,setTopThreeProducts
+    success,setTotalProducts,setTopThreeProducts,setSuccess
   } = useContext(DataContext)!;
-
+const [message,setMessage]=useState("")
   const handleMenuClick = () => {
     setOpen(!open);
   };
@@ -63,7 +63,9 @@ const Products: React.FC = () => {
           limit: perPage,
           sortBy: sortingCriteria,
         },
-      });
+         headers: { Authorization: `${sessionStorage.getItem("token")}` } 
+    });
+
       setRows(response.data.products);
       setTotalPages(response.data.totalPages);
       setTotalProducts(response.data.totalProducts)
@@ -88,12 +90,17 @@ const Products: React.FC = () => {
 
   const handleDeleteRow = async (id: string) => {
     await axios
-      .delete(`${API}/delete-product/${id}`)
-      .then((res) => {
-        console.log(res);
+      .delete(`${API}/delete-product/${id}`,{ headers: { Authorization: `${sessionStorage.getItem("token")}` } })
+      .then((res:any) => {
+        if(res.status === 200){
+          setSuccess(true);
+          setSnackbarOpen(true);
+          setMessage(res.data.message)
+        }
       })
       .catch((err) => {
-        console.log(err);
+        setSnackbarOpen(true);
+        setMessage(err.response.data.message);
       });
     handleCloseMenu();
   };
@@ -190,7 +197,7 @@ const Products: React.FC = () => {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Product update successfully
+          {message? message:"Product Update Successfully"}
         </Alert>
       </Snackbar>
     </>

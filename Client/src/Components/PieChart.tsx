@@ -8,7 +8,7 @@ const PieChart = () => {
   const [chartData, setChartData] = useState([]);
   const fetchData = async () => {
     await axios
-      .get(`${API}/get-device-type`)
+      .get(`${API}/get-device-type`,{ headers: { Authorization: `${sessionStorage.getItem("token")}` }})
       .then((res) => {
         setLabels(res.data.map((item: any) => item.deviceType));
         setChartData(res.data.map((item: any) => item.visitors));

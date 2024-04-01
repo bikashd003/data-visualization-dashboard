@@ -30,7 +30,7 @@ const BarChartComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API}/get-page-data`);
+        const response = await axios.get(`${API}/get-page-data`,{ headers: { Authorization: `${sessionStorage.getItem("token")}` }});
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -66,8 +66,8 @@ const BarChartComponent = () => {
         <YAxis />
         <Tooltip />
         <Legend verticalAlign="top" height={36} />
-        <Bar dataKey="pageViews" fill="#8884d8" name="Page Views" />
-        <Bar dataKey="avgTimeOnPage" fill="#82ca9d" name="Avg Time on Page" />
+        <Bar dataKey="pageViews" fill="#5356FF" name="Page Views" />
+        <Bar dataKey="avgTimeOnPage" fill="#65B741" name="Avg Time on Page" />
       </BarChart>
     </Container>
   );

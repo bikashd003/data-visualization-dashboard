@@ -44,7 +44,7 @@ const DataProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }: any) => {
   const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItem, setSelectedItem] = useState("Dashboard");
   const [rows, setRows] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [perPage] = useState<number>(5);

@@ -48,6 +48,8 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
 
   const handleLogout = () => {
     googleLogout();
+    sessionStorage.removeItem("token");
+    navigate("/login");
     handleMenuClose();
   };
 

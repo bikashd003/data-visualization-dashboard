@@ -15,7 +15,7 @@ const LineChart = () => {
 
   const fetchData = async () => {
     await axios
-      .post(`${API}/get-traffic-data`, { year: year })
+      .post(`${API}/get-traffic-data`, { year: year },{ headers: { Authorization: `${sessionStorage.getItem("token")}` }})
       .then((res) => {
         setLabels(res.data.map((item: any) => moment(item.date).format("MMM")));
         setPageViews(res.data.map((item: any) => item.pageViews));

@@ -1,8 +1,9 @@
-import { lazy, Suspense, useContext } from "react";
+import { lazy, Suspense, useContext, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 const LineChart = lazy(() => import("../Components/LineChart"));
+import { useNavigate } from "react-router-dom";
 
 const BarChartComponent = lazy(() => import("../Components/BarChartComponent"));
 const PieChart = lazy(() => import("../Components/PieChart"));
@@ -12,19 +13,29 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import Navbar from "../Components/Navbar";
 import { DataContext } from "../Context/ContextStore";
 
-
 const Dashboard = () => {
   const { open, setOpen } = useContext(DataContext)!;
-
+  const navigate = useNavigate();
   const handleMenuClick = () => {
     setOpen(!open);
   };
+  useEffect(() => {
+    if (!sessionStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <>
       <Navbar onMenuClick={handleMenuClick} />
 
-      <Grid container spacing={2} paddingLeft={4} paddingRight={4} paddingTop={2}>
+      <Grid
+        container
+        spacing={2}
+        paddingLeft={4}
+        paddingRight={4}
+        paddingTop={2}
+      >
         <Grid item xs={12} md={6} lg={8}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom>
@@ -57,10 +68,10 @@ const Dashboard = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-        <Paper elevation={3} sx={{ p: 2 }}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar />
-          </LocalizationProvider>
+          <Paper elevation={3} sx={{ p: 2 }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateCalendar />
+            </LocalizationProvider>
           </Paper>
         </Grid>
       </Grid>
