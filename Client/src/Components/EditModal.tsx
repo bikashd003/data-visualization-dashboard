@@ -60,7 +60,7 @@ const EditModal: React.FC = () => {
   const handleUpdate = async () => {
     if (!editedRow) return;
     try {
-     const res= await axios.put(`${API}/update-product/${selectedRow?._id}`, editedRow,{ headers: { Authorization: `${sessionStorage.getItem("token")}` } });
+     await axios.put(`${API}/update-product/${selectedRow?._id}`, editedRow,{ headers: { Authorization: `${sessionStorage.getItem("token")}` } });
       setSnackbarOpen(true);
       setSuccess(true);
       handleClose();
