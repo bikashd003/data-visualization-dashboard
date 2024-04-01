@@ -37,16 +37,13 @@ const Register = async (req, res) => {
 
       await newUser.save();
 
-      const token = jwt.sign({email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+      const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
       return res.status(200).json({ user: newUser, token, success: true });
     } else {
       // Custom signup
       // Check if the user already exists based on email
       const existingUser = await Admin.findOne({ email });
 
-      if (existingUser.googleId) {
-        return res.status(400).json({ message: 'User already exists please login via google', success: false });
-      }
       if (existingUser) {
         return res.status(400).json({ message: 'User already exists', success: false });
       }
@@ -62,7 +59,7 @@ const Register = async (req, res) => {
 
       await newUser.save();
 
-      const token = jwt.sign({email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+      const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
       return res.status(201).json({ user: newUser, token, success: true });
     }
   } catch (err) {
@@ -76,7 +73,6 @@ const Login = async (req, res) => {
   try {
     // Check if the request contains a Google OAuth credential
     if (credential) {
-      // Google OAuth login
       const ticket = await client.verifyIdToken({
         idToken: credential,
         audience: process.env.CLIENT_ID,
@@ -93,13 +89,11 @@ const Login = async (req, res) => {
         return res.status(404).json({ message: 'User not found', success: false });
       }
 
-      const token = jwt.sign({email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+      const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
       return res.status(200).json({ user, token, success: true });
     } else {
-      // Custom login
-      // Check if the user exists based on email
-      const user = await Admin.findOne({ email });
-
+      const user = await Admin.findOne({  $or: [{ email: email }]});
+      console.log(user)
       if (!user) {
         return res.status(404).json({ message: 'User not found', success: false });
       }
@@ -110,13 +104,13 @@ const Login = async (req, res) => {
       }
 
       // Compare the provided password with the hashed password
-      const isPasswordValid = await bcrypt.compare(password, user.password);
+      const isPasswordValid = bcrypt.compare(password, user.password);
 
       if (!isPasswordValid) {
         return res.status(401).json({ message: 'Invalid password', success: false });
       }
 
-      const token = jwt.sign({email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+      const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
       return res.status(200).json({ user, token, success: true });
     }
   } catch (err) {

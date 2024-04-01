@@ -37,9 +37,10 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(formData.email,formData.password)
     if (formData.email || formData.password) {
       await axios.post(`${API}/api/auth/google/login`, {
-        name: formData.email,
+        email: formData.email,
         Password: formData.password,
       })
         .then((res:any) => {

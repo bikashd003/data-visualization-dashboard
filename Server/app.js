@@ -9,7 +9,7 @@ import errorHandler from "./Middleware/Auth.middleware.js"
 const app = express();
 app.use(express.json());
 dotenv.config({ path: "./.env" });
-app.use(cors({credentials: true}));
+app.use(cors());
 
 connectDB()
     .then(() => {
@@ -20,7 +20,9 @@ connectDB()
     .catch((err) => {
         console.log(err);
     });
-
+app.get("/health", (req, res) => {
+    res.send("Hello World");
+})
 app.use("/api",AdminRouter)
 app.use(TraficRouter)
 app.use(productRouter)
